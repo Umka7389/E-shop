@@ -71,4 +71,18 @@ public class UserService {
     public List<User> getAllUsersWithType(UserType userType) {
         return userRepository.findAll();
     }
+
+    public List<User> findUserByRole (Role role) {
+        return userRepository.findUserByRoles(role);
+    }
+
+    public Role getRoleByType(UserType userType) {
+        Role role = new Role();
+        if (userType == UserType.MANAGER) {
+            role.setName("ROLE_MANAGER");
+        }else if (userType == UserType.USER) {
+            role.setName("ROLE_USER");
+        }
+        return role;
+    }
 }
