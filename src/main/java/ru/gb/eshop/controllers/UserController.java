@@ -3,7 +3,7 @@ package ru.gb.eshop.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import ru.gb.eshop.controllers.dto.UserDto;
-import ru.gb.eshop.controllers.dto.UserType;
+import ru.gb.eshop.controllers.dto.RoleDto;
 import ru.gb.eshop.entities.User;
 import ru.gb.eshop.services.UserService;
 
@@ -26,7 +26,7 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAllUsers(@RequestParam(value = "type", required = false) UserType type) {
+    public List<User> getAllUsers(@RequestParam(value = "type", required = false) RoleDto type) {
         return userService.getAllUsersWithType(type);
     }
 
