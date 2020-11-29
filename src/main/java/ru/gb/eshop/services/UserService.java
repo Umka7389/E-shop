@@ -2,12 +2,13 @@ package ru.gb.eshop.services;
 
 
 import org.springframework.stereotype.Service;
+import ru.gb.eshop.controllers.dto.RoleDto;
 import ru.gb.eshop.controllers.dto.UserDto;
-import ru.gb.eshop.controllers.dto.UserType;
 import ru.gb.eshop.entities.Role;
 import ru.gb.eshop.entities.User;
 import ru.gb.eshop.exceptions.ManagerIsEarlierThanNeedException;
 import ru.gb.eshop.exceptions.UnknownUserTypeException;
+import ru.gb.eshop.exceptions.UserNotFoundException;
 import ru.gb.eshop.repositories.UserRepository;
 
 import java.util.List;
@@ -25,9 +26,9 @@ public class UserService {
     }
 
     public User saveUser(UserDto userDto) {
-        if (userDto.getUserType().equals(UserType.MANAGER)) {
+        if (userDto.getRoleDto().equals(RoleDto.MANAGER)) {
             saveManager(userDto);
-        } else if (userDto.getUserType().equals(UserType.USER)) {
+        } else if (userDto.getRoleDto().equals(RoleDto.CUSTOMER)) {
             saveTypicallyUser(userDto);
         }
 
@@ -68,21 +69,22 @@ public class UserService {
         return user;
     }
 
-    public List<User> getAllUsersWithType(UserType userType) {
+    public List<User> getAllUsersWithType(RoleDto roleDto) {
+        Role role;
+
+        if (roleDto == RoleDto.CUSTOMER) {
+            role = roleService.getByName("ROLE_CUSTOMER");
+            return userRepository.findAllByRoles(role);
+        } else if (roleDto == RoleDto.MANAGER) {
+            role = roleService.getByName("ROLE_MANAGER");
+            return userRepository.findAllByRoles(role);
+        }
+
         return userRepository.findAll();
     }
 
-    public List<User> findUserByRole (Role role) {
-        return userRepository.findUserByRoles(role);
-    }
-
-    public Role getRoleByType(UserType userType) {
-        Role role = new Role();
-        if (userType == UserType.MANAGER) {
-            role.setName("ROLE_MANAGER");
-        }else if (userType == UserType.USER) {
-            role.setName("ROLE_USER");
-        }
-        return role;
+    public User findById(long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(String.format("Пользователь с идентификатором %s не найден", id)));
     }
 }
