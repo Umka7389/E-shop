@@ -39,6 +39,7 @@ public class CartView extends AbstractView {
 
             Button minusButton = new Button("-", i -> {
                 item.decrement();
+                if (item.getQuantity() <= 0) cartService.getItems().remove(item);
                 grid.setItems(cartService.getItems());
             });
 
