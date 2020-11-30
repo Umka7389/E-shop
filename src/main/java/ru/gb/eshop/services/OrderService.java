@@ -2,13 +2,15 @@ package ru.gb.eshop.services;
 
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.gb.eshop.entities.Order;
-import ru.gb.eshop.entities.OrderItem;
+import ru.gb.eshop.entities.User;
 import ru.gb.eshop.repositories.OrderItemRepository;
 import ru.gb.eshop.repositories.OrderRepository;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static ru.gb.eshop.entities.Order.Status.MANAGING;
 
 @Service
 public class OrderService {
@@ -29,22 +31,24 @@ public class OrderService {
     }
 
     public void saveOrder() {
+        User user = userService.findById(1L);
+
         Order order = new Order();
         order.setItems(cartService.getItems());
         order.setAddress(cartService.getAddress());
         order.setPhoneNumber(cartService.getPhone());
-        order.setUser(userService.findById(1L));
+        order.setUser(user);
         order.setPrice(cartService.getPrice());
+        order.setStatus(MANAGING);
+        order.setPhoneNumber(user.getPhone());
 
         final Order savedOrder = orderRepository.save(order);
-
-        List<OrderItem> orderItems = order.getItems().stream().peek(orderItem -> orderItem.setOrder(savedOrder)).collect(Collectors.toList());
-
-        orderItemRepository.saveAll(orderItems);
     }
 
+    @Transactional
     public List<Order> getByUserId(long userId) {
         return orderRepository.findAllByUserId(userId);
     }
+
 
 }

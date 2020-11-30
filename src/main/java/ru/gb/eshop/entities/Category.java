@@ -1,7 +1,5 @@
 package ru.gb.eshop.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,10 +16,4 @@ public class Category {
 
     @Column(name = "title")
     private String title;
-
-    @ManyToMany
-    @JoinTable(name = "products_categories",
-    joinColumns = @JoinColumn(name = "category_id"),
-    inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private List<Product> products;
 }

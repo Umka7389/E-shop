@@ -26,6 +26,10 @@ public class CartService {
     private String address;
     private String phone;
 
+    public void clear() {
+        this.items = new ArrayList<>();
+    }
+
     @PostConstruct
     public void init() {
         items = new ArrayList<>();
@@ -70,5 +74,4 @@ public class CartService {
                 price = price.add(orderItem.getPrice())
         );
     }
-
 }

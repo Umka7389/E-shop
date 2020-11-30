@@ -20,10 +20,6 @@ public class OrderItem {
     private BigDecimal price;
     private int quantity;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
-
     public OrderItem() {}
 
     public OrderItem(Product product) {
