@@ -111,11 +111,13 @@ create table items
 );
 
 drop table if exists orders_items cascade;
-create table order_items
+create table orders_items
 (
     id       bigserial,
     order_id bigint not null,
     item_id  bigint not null,
+
+
     primary key (id),
     constraint fk_order_items_id foreign key (order_id) references orders (id),
     constraint fk_item_id foreign key (item_id) references items (id)

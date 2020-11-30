@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name =  "orders_items")
+@Table(name =  "items")
 @Data
 public class OrderItem {
     @Id
@@ -18,6 +18,7 @@ public class OrderItem {
     private Product product;
 
     private BigDecimal price;
+
     private int quantity;
 
     public OrderItem() {}

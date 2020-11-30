@@ -21,7 +21,7 @@ public class Order {
     private User user;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "order_items",
+    @JoinTable(name = "orders_items",
             joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name =  "item_id"))
     private List<OrderItem> items;
