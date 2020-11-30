@@ -49,14 +49,19 @@ public class CartView extends AbstractView {
         TextField phoneField = initTextFieldWithPlaceholder("Введите номер телефона");
 
         Button toOrderButton = new Button("Создать заказ", e -> {
-            cartService.setAddress(addressField.getValue());
-            cartService.setPhone(phoneField.getValue());
-            orderService.saveOrder();
+            String checkOnlyNumbers = "\\d+";
+            if (!phoneField.getValue().matches(checkOnlyNumbers)) {
+                Notification.show("Некорректно указан номер телефона");
+            } else {
+                cartService.setAddress(addressField.getValue());
+                cartService.setPhone(phoneField.getValue());
+                orderService.saveOrder();
 
-            cartService.clear();
-            UI.getCurrent().navigate("market");
+                cartService.clear();
+                UI.getCurrent().navigate("market");
 
-            Notification.show("Заказ успешно сохранён и передан менеджеру");
+                Notification.show("Заказ успешно сохранён и передан менеджеру");
+            }
         });
 
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
