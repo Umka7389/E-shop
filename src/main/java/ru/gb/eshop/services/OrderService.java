@@ -3,6 +3,7 @@ package ru.gb.eshop.services;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.gb.eshop.aspect.Log;
 import ru.gb.eshop.entities.Order;
 import ru.gb.eshop.entities.User;
 import ru.gb.eshop.repositories.OrderItemRepository;
@@ -30,6 +31,7 @@ public class OrderService {
         this.orderItemRepository = orderItemRepository;
     }
 
+    @Log
     public void saveOrder() {
         User user = userService.findById(1L);
 
