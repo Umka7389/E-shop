@@ -28,3 +28,11 @@ components:
         name:
           required: true
           type: string
+    SomeEndPoint:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: uuid
+        date:
+          type: date
