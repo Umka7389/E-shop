@@ -14,6 +14,8 @@ public class JsonTests {
     @Autowired
     private JacksonTester<Role> jackson;
 
+//TODO: tests
+
     @Test
     public void jsonSerializationTest() throws Exception {
         Role role = new Role();
