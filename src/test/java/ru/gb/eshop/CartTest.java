@@ -1,11 +1,12 @@
 package ru.gb.eshop;
 
-import com.geekbrains.entities.Product;
-import com.geekbrains.services.CartService;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import ru.gb.eshop.entities.Product;
+import ru.gb.eshop.services.CartService;
 
 import java.math.BigDecimal;
 
