@@ -51,8 +51,13 @@ public class MarketView extends AbstractView {
 
         Button otherOrdersButton = new Button("Заказы пользователей", e-> UI.getCurrent().navigate("other-orders"));
         if(isManagerOrAdmin()) {
+            horizontalLayout.add(new Button("Добавить продукт", e -> UI.getCurrent().navigate("create-product")));
             horizontalLayout.add(otherOrdersButton);
         }
+        horizontalLayout.add(new Button("Выход", e -> {
+            SecurityContextHolder.clearContext();
+            UI.getCurrent().navigate("login");
+        }));
 
         productGrid = new Grid<>(Product.class);
         productGrid.setWidth("60%");
@@ -132,6 +137,5 @@ public class MarketView extends AbstractView {
         filterComponentsLayout.setAlignItems(Alignment.CENTER);
         return filterComponentsLayout;
     }
-
 
 }
