@@ -1,6 +1,8 @@
 package ru.gb.eshop.services;
 
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gb.eshop.aspect.Log;
@@ -20,6 +22,7 @@ public class OrderService {
     private final CartService cartService;
     private final UserService userService;
     private final OrderItemRepository orderItemRepository;
+    private final Authentication authentication;
 
     public OrderService(OrderRepository orderRepository,
                         CartService cartService,
@@ -29,9 +32,9 @@ public class OrderService {
         this.cartService = cartService;
         this.userService = userService;
         this.orderItemRepository = orderItemRepository;
+        this.authentication = SecurityContextHolder.getContext().getAuthentication();;
     }
 
-    @Log
     public void saveOrder() {
         User user = userService.findById(1L);
 
@@ -52,5 +55,8 @@ public class OrderService {
         return orderRepository.findAllByUserId(userId);
     }
 
+    public List<Order> getByUserName(String userName) {
+        return orderRepository.findAllByUser_Phone(userName);
+    }
 
 }

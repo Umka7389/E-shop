@@ -14,20 +14,20 @@ import java.util.List;
 public class CartService {
     private List<OrderItem> items;
 
+    private BigDecimal price;
+
+    private String address;
+    private String phone;
+    public void clear() {
+        this.items = new ArrayList<>();
+    }
+
     public BigDecimal getPrice() {
         return price;
     }
 
     public void setPrice(BigDecimal price) {
         this.price = price;
-    }
-
-    private BigDecimal price;
-    private String address;
-    private String phone;
-
-    public void clear() {
-        this.items = new ArrayList<>();
     }
 
     @PostConstruct
