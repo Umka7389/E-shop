@@ -16,15 +16,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import ru.gb.eshop.entities.PriceHistory;
 import ru.gb.eshop.entities.Product;
-import ru.gb.eshop.entities.embeded.ProductStartDate;
 import ru.gb.eshop.repositories.ProductRepository;
 import ru.gb.eshop.services.CartService;
 import ru.gb.eshop.specifications.ProductFilter;
 
-import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.*;
 
 @Route("market")
@@ -69,7 +65,7 @@ public class MarketView extends AbstractView {
         productGrid = new Grid<>(Product.class);
         productGrid.setWidth("60%");
         productGrid.setColumns("id", "title", "price");
-        productGrid.addColumn(Product::getPriceHistoryList).setHeader("Price history");
+        productGrid.addColumn(Product::getPriceList).setHeader("Price history");
         productGrid.setSelectionMode(Grid.SelectionMode.MULTI);
         List<Product> productList = productRepository.findAll();
         productGrid.setItems(productList);

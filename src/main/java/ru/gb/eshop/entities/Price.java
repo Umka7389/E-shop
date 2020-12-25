@@ -14,7 +14,7 @@ import java.sql.Date;
 @Table(name = "prices")
 @Getter
 @Setter
-public class PriceHistory {
+public class Price {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +29,11 @@ public class PriceHistory {
 
     @Column (name = "price")
     private BigDecimal price;
+
+    @Override
+    public String toString() {
+        return this.getPrice().toString();
+    }
 
 
 }
