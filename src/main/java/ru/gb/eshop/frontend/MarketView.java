@@ -30,13 +30,16 @@ public class MarketView extends AbstractView {
     private final ProductRepository productRepository;
     private final Authentication authentication;
 
+
     private TextField titleTextField;
     private TextField minPriceTextField;
     private TextField maxPriceTextField;
     private Grid<Product> productGrid;
 
+
     public MarketView(CartService cartService,
-                      ProductRepository productRepository) {
+                      ProductRepository productRepository
+                     ) {
         this.cartService = cartService;
         this.productRepository = productRepository;
         this.authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -49,8 +52,8 @@ public class MarketView extends AbstractView {
         horizontalLayout.add(new Button("Корзина", e -> UI.getCurrent().navigate("cart")));
         horizontalLayout.add(new Button("Мои заказы", e -> UI.getCurrent().navigate("orders")));
 
-        Button otherOrdersButton = new Button("Заказы пользователей", e-> UI.getCurrent().navigate("other-orders"));
-        if(isManagerOrAdmin()) {
+        Button otherOrdersButton = new Button("Заказы пользователей", e -> UI.getCurrent().navigate("other-orders"));
+        if (isManagerOrAdmin()) {
             horizontalLayout.add(new Button("Добавить продукт", e -> UI.getCurrent().navigate("create-product")));
             horizontalLayout.add(otherOrdersButton);
         }
@@ -62,9 +65,11 @@ public class MarketView extends AbstractView {
         productGrid = new Grid<>(Product.class);
         productGrid.setWidth("60%");
         productGrid.setColumns("id", "title", "price");
+        productGrid.addColumn(Product::getPriceList).setHeader("Price history");
         productGrid.setSelectionMode(Grid.SelectionMode.MULTI);
         List<Product> productList = productRepository.findAll();
         productGrid.setItems(productList);
+
 
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
