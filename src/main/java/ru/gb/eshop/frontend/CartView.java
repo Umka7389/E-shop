@@ -25,6 +25,7 @@ public class CartView extends AbstractView {
     private final OrderService orderService;
     private final UserService userService;
 
+
     public CartView(CartService cartService,
                     OrderService orderService,
                     UserService userService) {
@@ -89,7 +90,7 @@ public class CartView extends AbstractView {
         });
 
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-        setAlignItems(Alignment.CENTER);
+
         Label label = new Label("Ваши средства на кошельке: " + user.getMoney().toString());
         add(label, grid, addressField, phoneField, toOrderButton);
     }

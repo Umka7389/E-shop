@@ -21,6 +21,12 @@ public class Product {
     private Long id;
 
     private String title;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "products_prices",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name =  "pricehistory_id"))
+    private List<PriceHistory> priceHistoryList;
+
     private BigDecimal price;
 
     @ManyToMany

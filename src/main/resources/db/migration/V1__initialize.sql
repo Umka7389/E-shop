@@ -14,6 +14,21 @@ values ('Cheese', 'Fresh cheese', 320.0),
        ('Apples', 'Fresh apples', 80.0),
        ('Bread', 'Fresh bread', 30.0);
 
+drop table if exists prices;
+create table prices
+(
+    id         bigserial,
+    price      numeric(8, 2),
+    start_date date not null,
+    end_date   date
+);
+insert into prices
+    (price, start_date, end_date)
+values (1000, '2020-12-20', '2020-12-21'),
+       (1500, '2020-12-21', '2020-12-22'),
+       (2000, '2020-12-23', '2020-12-24'),
+       (3000, '2020-12-25', null);
+
 drop table if exists categories cascade;
 create table categories
 (
@@ -40,7 +55,20 @@ values (1, 1),
        (2, 1),
        (3, 1),
        (4, 2);
-
+drop table if exists products_prices cascade;
+create table products_prices
+(
+    product_id      bigint not null,
+    price_id bigint not null,
+    primary key (product_id, price_id),
+    foreign key (product_id) references products (id),
+    foreign key (price_id) references prices (id)
+);
+insert into products_prices (product_id, price_id)
+values (1, 1),
+       (1, 2),
+       (1, 3),
+       (1, 4);
 drop table if exists users;
 create table users
 (
@@ -50,7 +78,7 @@ create table users
     email      VARCHAR(50) UNIQUE,
     first_name VARCHAR(50),
     last_name  VARCHAR(50),
-    money                 INT,
+    money      INT,
     PRIMARY KEY (id)
 );
 
@@ -79,12 +107,13 @@ values ('ROLE_CUSTOMER'),
        ('ROLE_MANAGER'),
        ('ROLE_ADMIN');
 
-insert into users (phone, password, first_name, last_name, email)
-values ('admin', '$2y$12$rxg3cYnpaZsNwAVuaiKZXeDb69dR.h9foNdfARmOp/9UBRLymKV22', 'admin', 'admin', 'admin@gmail.com');
+insert into users (phone, password, first_name, last_name, email, money)
+values ('admin', '$2y$12$rxg3cYnpaZsNwAVuaiKZXeDb69dR.h9foNdfARmOp/9UBRLymKV22', 'admin', 'admin', 'admin@gmail.com',
+        123123);
 
 insert into users (phone, password, first_name, last_name, email, money)
-values
-('customer','$2y$12$xp41fm4W9DNDQngLGdPumOco1rXmdcza1Z.o/9Pf.j8yJjh17NfW6','customer','customer','customer@gmail.com', 0);
+values ('customer', '$2y$12$xp41fm4W9DNDQngLGdPumOco1rXmdcza1Z.o/9Pf.j8yJjh17NfW6', 'customer', 'customer',
+        'customer@gmail.com', 0);
 
 insert into users_roles (user_id, role_id)
 values (1, 1),
